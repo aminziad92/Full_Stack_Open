@@ -3,4 +3,4 @@ This repository created for the exercises submission of the University of Helsin
 
 ## Part 3 – Phonebook (online)
 
-https://phonebook-fso-bwry.onrender.com/api/persons
+https://phonebook-fso-bwry.onrender.com
