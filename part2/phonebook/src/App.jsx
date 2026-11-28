@@ -96,9 +96,13 @@ const App = () => {
             setNewNumber('')
             showMessage(`Changed ${returnedPerson.name}'s number`)
           })
-          .catch(() => {
-            showMessage(`Information of ${existingPerson.name} has already been removed from server`, 'error')
-            setPersons(persons.filter(p => p.id !== existingPerson.id))
+                    .catch(error => {
+            if (error.response.status === 404) {
+              showMessage(`Information of ${existingPerson.name} has already been removed from server`, 'error')
+              setPersons(persons.filter(p => p.id !== existingPerson.id))
+            } else {
+              showMessage(error.response.data.error, 'error')
+            }
           })
       }
       return
@@ -108,13 +112,16 @@ const App = () => {
       number: newNumber
     }
 
-        personService
+      personService
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
         showMessage(`Added ${returnedPerson.name}`)
+      })
+      .catch(error => {
+        showMessage(error.response.data.error, 'error')
       })
   }
 
